@@ -45,18 +45,11 @@ conan_basic_setup()''')
 
     def package(self):
         self.copy("*.h", dst="include", src="armadillo")
-        self.copy("*.lib", dst="lib", keep_path=False)
-        self.copy("*.dll", dst="bin", keep_path=False)
+        self.copy("*armadillo.lib", dst="lib", keep_path=False)
+        self.copy("*armadillo.dll", dst="bin", keep_path=False)
         self.copy("*.so", dst="lib", keep_path=False)
         self.copy("*.dylib", dst="lib", keep_path=False)
         self.copy("*.a", dst="lib", keep_path=False)
 
     def package_info(self):
         self.cpp_info.libs = ["armadillo"]
-        # FIXME need linux and macOS
-        if self.settings.os == "Windows":
-            suffix = ""
-            if self.settings.arch == "x86_64":
-                suffix += "Win64_"   
-            suffix += str(self.settings.compiler.runtime)
-            self.cpp_info.libs += ["blas_" + suffix, "lapack_" + suffix]
